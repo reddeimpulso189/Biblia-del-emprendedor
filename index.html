@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Biblia del Emprendedor · Red de Impulso</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul:#1A56DB;--azul-osc:#0F3A9E;--azul-cla:#3B82F6;
+  --verde:#10B981;--oro:#F59E0B;--rojo:#EF4444;
+  --radio:14px;--radio2:10px;
+  --bg:#F8FAFC;--bg2:#F1F5F9;--card:#FFFFFF;
+  --txt:#1E293B;--txt2:#475569;--txt3:#94A3B8;
+  --borde:#E2E8F0;--borde2:#CBD5E1;
+  --azul-suave:#EFF6FF;--sombra:0 2px 12px rgba(0,0,0,0.07);
+}
+[data-theme="dark"]{
+  --bg:#0F172A;--bg2:#1E293B;--card:#1E293B;
+  --txt:#F1F5F9;--txt2:#94A3B8;--txt3:#64748B;
+  --borde:#334155;--borde2:#475569;
+  --azul-suave:#1e3558;--sombra:0 2px 12px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;font-size:15px;transition:background .3s,color .3s;}
+
+/* ANIMACIONES */
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{transform:scale(.7)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(26,86,219,.3)}50%{box-shadow:0 0 0 6px rgba(26,86,219,0)}}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,var(--azul-osc) 0%,var(--azul) 60%,var(--azul-cla) 100%);position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(26,86,219,.3);}
+.header-inner{max-width:900px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;letter-spacing:1.5px;line-height:1;}
+.logo span{color:#93C5FD;}
+.theme-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.theme-btn:hover{background:rgba(255,255,255,.28);transform:rotate(15deg) scale(1.05);}
+.theme-btn:active{transform:scale(.85);}
+
+/* MILLÓN */
+.millon-bar{background:var(--bg2);border-bottom:1px solid var(--borde);padding:9px 16px;transition:background .3s;}
+.millon-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:10px;}
+.millon-label{font-family:'Bebas Neue',sans-serif;font-size:11px;color:var(--azul-cla);letter-spacing:1px;white-space:nowrap;}
+.millon-track{flex:1;height:8px;background:var(--borde);border-radius:99px;overflow:hidden;}
+.millon-fill{height:100%;background:linear-gradient(90deg,var(--azul-osc),var(--azul-cla));border-radius:99px;transition:width .9s cubic-bezier(.4,0,.2,1);min-width:3px;}
+.millon-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--txt);white-space:nowrap;font-weight:500;}
+.millon-btn{background:var(--azul);color:#fff;border:none;font-size:11px;padding:4px 10px;border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s;}
+.millon-btn:hover{background:var(--azul-osc);transform:translateY(-1px);}
+.millon-btn:active{transform:scale(.9);}
+
+/* MAIN */
+.main{max-width:900px;margin:0 auto;padding:16px 12px 70px;}
+
+/* TABS */
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.tab{padding:8px 15px;border-radius:99px;border:1.5px solid var(--borde2);background:var(--card);font-size:13px;font-weight:500;color:var(--txt2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.tab:hover{border-color:var(--azul-cla);color:var(--azul);transform:translateY(-2px);box-shadow:0 4px 12px rgba(59,130,246,.15);}
+.tab:active{transform:scale(.93);}
+.tab.active{background:var(--azul);color:#fff;border-color:var(--azul);box-shadow:0 4px 14px rgba(26,86,219,.3);}
+
+/* PANEL */
+.panel{display:none;}
+.panel.active{display:block;animation:fadeIn .2s ease;}
+
+/* RESUMEN BOX */
+.resumen-box{background:linear-gradient(135deg,var(--azul-osc),var(--azul));border-radius:var(--radio);padding:14px 16px;margin-bottom:14px;color:#fff;}
+.resumen-titulo{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;margin-bottom:10px;opacity:.8;}
+.resumen-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.resumen-item{background:rgba(255,255,255,.12);border-radius:9px;padding:9px 11px;}
+.resumen-item-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;opacity:.7;margin-bottom:2px;}
+.resumen-item-val{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.5px;}
+
+/* SEMANA */
+.semana-card{background:var(--card);border-radius:var(--radio);border:1px solid var(--borde);margin-bottom:12px;overflow:hidden;box-shadow:var(--sombra);transition:background .3s,border-color .3s;}
+.semana-header{background:linear-gradient(90deg,var(--azul-osc),var(--azul));padding:12px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;transition:filter .15s;}
+.semana-header:hover{filter:brightness(1.08);}
+.semana-header:active{filter:brightness(.95);}
+.semana-titulo{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;letter-spacing:1px;}
+.semana-sub{font-size:9px;color:rgba(255,255,255,.65);margin-top:2px;}
+.semana-pct{font-family:'DM Mono',monospace;font-size:13px;color:#fff;font-weight:500;}
+.semana-arrow{color:rgba(255,255,255,.75);font-size:12px;transition:transform .25s;margin-left:7px;display:inline-block;}
+.semana-arrow.open{transform:rotate(180deg);}
+.semana-body{display:none;}
+.semana-body.open{display:block;}
+
+/* INGRESO META */
+.ingreso-meta{padding:8px 16px;background:var(--azul-suave);border-bottom:1px solid var(--borde);display:flex;align-items:center;gap:7px;flex-wrap:wrap;transition:background .3s;}
+.ingreso-meta span{font-size:11px;color:var(--azul);font-weight:500;}
+.chip{border-radius:99px;padding:2px 9px;font-size:10px;font-weight:600;}
+.chip-a{background:var(--azul);color:#fff;}
+.chip-v{background:var(--verde);color:#fff;}
+.chip-o{background:var(--oro);color:#fff;}
+
+/* DÍA */
+.dia-block{border-bottom:1px solid var(--borde);}
+.dia-block:last-child{border-bottom:none;}
+.dia-header{padding:10px 16px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;background:var(--bg2);transition:background .15s;}
+.dia-header:hover{background:var(--azul-suave);}
+.dia-header:active{transform:scaleX(.99);}
+.dia-nombre{font-weight:600;font-size:13px;color:var(--txt);min-width:84px;}
+.dia-fecha{font-size:11px;color:var(--txt2);}
+.dia-pct{margin-left:auto;font-size:11px;font-family:'DM Mono',monospace;color:var(--azul-cla);font-weight:500;}
+.dia-arrow{color:var(--txt3);font-size:10px;transition:transform .2s;display:inline-block;}
+.dia-arrow.open{transform:rotate(180deg);}
+.dia-body{display:none;padding:0 16px 14px;animation:fadeIn .18s ease;}
+.dia-body.open{display:block;}
+
+/* META DEL DÍA */
+.meta-dia{margin:11px 0 9px;background:linear-gradient(135deg,var(--azul-osc),var(--azul-cla));border-radius:var(--radio2);padding:12px 14px;color:#fff;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(26,86,219,.22);}
+.meta-dia::after{content:'🎯';position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:24px;opacity:.28;}
+.meta-dia-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.62);margin-bottom:3px;}
+.meta-dia-texto{font-size:12px;font-weight:600;line-height:1.4;padding-right:32px;}
+
+/* REGISTRO GANANCIA */
+.ganancia-box{background:var(--bg2);border:1px solid var(--borde);border-radius:var(--radio2);padding:11px 13px;margin:9px 0 7px;transition:background .3s;}
+.ganancia-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.ganancia-titulo{font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.07em;}
+.ganancia-total{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--verde);letter-spacing:.5px;}
+.g-row{display:flex;gap:5px;align-items:center;margin-bottom:4px;}
+.g-input{flex:1;border:1.5px solid var(--borde2);border-radius:7px;padding:6px 10px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--card);color:var(--txt);outline:none;transition:border-color .15s,background .3s;}
+.g-input:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(26,86,219,.1);}
+.g-input::placeholder{color:var(--txt3);}
+.g-desc{width:130px;}
+.btn-add{background:var(--verde);color:#fff;border:none;border-radius:7px;padding:7px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;white-space:nowrap;}
+.btn-add:hover{background:#059669;transform:translateY(-1px);box-shadow:0 4px 10px rgba(16,185,129,.3);}
+.btn-add:active{transform:scale(.88);}
+.g-list{margin-top:6px;}
+.g-entry{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--txt2);padding:4px 0;border-bottom:1px solid var(--borde);animation:slideIn .2s ease;}
+.g-entry:last-child{border-bottom:none;}
+.g-monto{font-weight:600;color:var(--verde);min-width:65px;font-family:'DM Mono',monospace;font-size:11px;}
+.g-desc2{flex:1;}
+.g-hora{color:var(--txt3);font-size:9px;font-family:'DM Mono',monospace;}
+.btn-del{background:none;border:none;color:var(--txt3);cursor:pointer;font-size:13px;padding:0 2px;transition:all .15s;}
+.btn-del:hover{color:var(--rojo);transform:scale(1.2);}
+.btn-del:active{transform:scale(.85);}
+
+/* TASKS */
+.h-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt3);margin:9px 0 4px;}
+.task{display:flex;align-items:flex-start;gap:9px;padding:8px 9px;border-radius:8px;cursor:pointer;margin-bottom:2px;transition:background .15s,transform .1s;}
+.task:hover{background:var(--azul-suave);}
+.task:active{transform:scale(.99);}
+.chk{width:18px;height:18px;border:2px solid var(--borde2);border-radius:5px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s cubic-bezier(.4,0,.2,1);}
+.chk.done{background:var(--verde);border-color:var(--verde);animation:popIn .25s cubic-bezier(.4,0,.2,1);}
+.chk.done::after{content:'✓';color:#fff;font-size:10px;font-weight:700;}
+.t-txt{font-size:12px;color:var(--txt);line-height:1.45;flex:1;}
+.t-txt.done{text-decoration:line-through;color:var(--txt3);}
+.t-hora{font-family:'DM Mono',monospace;font-size:9px;color:var(--txt3);margin-top:2px;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-bottom:14px;}
+.s-card{background:var(--card);border-radius:var(--radio2);border:1px solid var(--borde);padding:11px 13px;display:flex;flex-direction:column;gap:3px;position:relative;overflow:hidden;box-shadow:var(--sombra);transition:background .3s,transform .15s;}
+.s-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,86,219,.12);}
+.s-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul-cla);}
+.s-label{font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;}
+.s-val{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--azul-osc);letter-spacing:.5px;line-height:1;}
+[data-theme="dark"] .s-val{color:var(--azul-cla);}
+.s-sub{font-size:9px;color:var(--txt3);}
+.s-btn{background:none;border:1px solid var(--borde2);border-radius:5px;padding:2px 7px;font-size:10px;cursor:pointer;color:var(--txt2);margin-top:3px;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.s-btn:hover{border-color:var(--azul);color:var(--azul);transform:scale(1.05);}
+.s-btn:active{transform:scale(.92);}
+
+/* GUIONES */
+.g-card{background:var(--card);border:1px solid var(--borde);border-radius:var(--radio2);padding:13px 15px;margin-bottom:9px;box-shadow:var(--sombra);transition:all .15s;}
+.g-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,86,219,.1);}
+.g-dia{font-size:9px;font-weight:600;color:var(--azul-cla);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;}
+.g-titulo{font-weight:600;font-size:13px;color:var(--txt);margin-bottom:7px;}
+.g-hook{font-size:11px;color:var(--txt);line-height:1.5;border-left:3px solid var(--azul);padding:7px 9px;background:var(--azul-suave);border-radius:0 6px 6px 0;margin-bottom:7px;font-style:italic;}
+.g-pts{list-style:none;}
+.g-pts li{font-size:11px;color:var(--txt2);padding:2px 0 2px 14px;position:relative;}
+.g-pts li::before{content:'→';position:absolute;left:0;color:var(--azul-cla);font-size:10px;}
+
+/* FINANZAS */
+.fin-card{background:var(--card);border:1px solid var(--borde);border-radius:var(--radio);padding:16px;margin-bottom:12px;box-shadow:var(--sombra);transition:background .3s;}
+.fin-titulo{font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--azul-osc);letter-spacing:1px;margin-bottom:12px;}
+[data-theme="dark"] .fin-titulo{color:var(--azul-cla);}
+.fin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;}
+.fin-box{background:var(--bg2);border-radius:var(--radio2);padding:11px 13px;transition:background .3s;}
+.fin-label{font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.fin-monto{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.5px;line-height:1;}
+.fin-sub{font-size:9px;color:var(--txt3);margin-top:2px;}
+.fin-dia-row{display:grid;grid-template-columns:80px 1fr auto;gap:6px;padding:6px 0;border-bottom:1px solid var(--borde);font-size:12px;align-items:center;}
+.fin-dia-row:empty{display:none;}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);}
+.modal-bg.open{display:flex;animation:fadeIn .15s ease;}
+.modal{background:var(--card);border-radius:var(--radio);padding:20px;max-width:320px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:popIn .2s cubic-bezier(.4,0,.2,1);transition:background .3s;}
+.modal-titulo{font-family:'Bebas Neue',sans-serif;font-size:19px;color:var(--azul-osc);letter-spacing:1px;margin-bottom:11px;}
+[data-theme="dark"] .modal-titulo{color:var(--azul-cla);}
+.m-input{border:1.5px solid var(--borde2);border-radius:8px;padding:9px 12px;font-size:13px;font-family:'DM Sans',sans-serif;width:100%;outline:none;background:var(--bg2);color:var(--txt);margin-bottom:11px;transition:all .15s;}
+.m-input:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(26,86,219,.12);}
+.m-btns{display:flex;gap:7px;}
+.btn{padding:9px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;border:none;transition:all .15s;}
+.btn:active{transform:scale(.93);}
+.btn-p{background:var(--azul);color:#fff;flex:1;}
+.btn-p:hover{background:var(--azul-osc);transform:translateY(-1px);box-shadow:0 4px 14px rgba(26,86,219,.3);}
+.btn-s{background:var(--bg2);color:var(--txt2);border:1px solid var(--borde2);}
+.btn-s:hover{border-color:var(--txt2);}
+
+/* LOCKED */
+.semana-locked{opacity:.4;pointer-events:none;}
+
+/* CITA */
+.cita{text-align:center;padding:20px;font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--txt3);letter-spacing:1px;}
+.cita span{color:var(--azul-cla);}
+
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .resumen-grid{grid-template-columns:1fr 1fr;}
+  .fin-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="logo">RED DE <span>IMPULSO</span></div>
+      <div style="font-size:9px;color:rgba(255,255,255,.5);letter-spacing:1.5px;margin-top:1px;">LA BIBLIA DEL EMPRENDEDOR</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:9px;">
+      <div style="font-size:10px;color:rgba(255,255,255,.7);text-align:right;line-height:1.5;" id="fecha-hoy"></div>
+      <button class="theme-btn" onclick="toggleTema()" id="tema-btn">🌙</button>
+    </div>
+  </div>
+</div>
+
+<div class="millon-bar">
+  <div class="millon-inner">
+    <div class="millon-label">META</div>
+    <div class="millon-track"><div class="millon-fill" id="millon-fill" style="width:0%"></div></div>
+    <div class="millon-num" id="millon-num">$0 / $1,000,000</div>
+    <button class="millon-btn" onclick="openModalMillon()">+ Ingreso</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="tabs">
+    <button class="tab active" onclick="cambiarTab('semanas',this)">📅 Plan Semanal</button>
+    <button class="tab" onclick="cambiarTab('contadores',this)">📊 Contadores</button>
+    <button class="tab" onclick="cambiarTab('guiones',this)">🎬 Guiones</button>
+    <button class="tab" onclick="cambiarTab('finanzas',this)">💰 Finanzas</button>
+  </div>
+
+  <!-- ======= SEMANAS ======= -->
+  <div class="panel active" id="panel-semanas">
+
+    <div class="resumen-box">
+      <div class="resumen-titulo">RESUMEN SEMANA 1 · 20–26 ABRIL 2026</div>
+      <div class="resumen-grid">
+        <div class="resumen-item"><div class="resumen-item-label">Tareas completadas</div><div class="resumen-item-val" id="res-tareas">0%</div></div>
+        <div class="resumen-item"><div class="resumen-item-label">Ingresos del proyecto</div><div class="resumen-item-val" id="res-ganancia">$0</div></div>
+        <div class="resumen-item"><div class="resumen-item-label">Gastos fijos</div><div class="resumen-item-val">Uber ✓</div></div>
+        <div class="resumen-item"><div class="resumen-item-label">Inversión lista lun 27</div><div class="resumen-item-val">$2,000</div></div>
+      </div>
+    </div>
+
+    <div class="semana-card">
+      <div class="semana-header" onclick="toggleSem('s1')">
+        <div>
+          <div class="semana-titulo">SEMANA 1 · 20–26 ABRIL</div>
+          <div class="semana-sub">FASE 1 · Reconocimiento de mercado · Sin inversión esta semana</div>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <span class="semana-pct" id="pct-s1">0%</span>
+          <span class="semana-arrow open" id="arr-s1">▼</span>
+        </div>
+      </div>
+      <div class="semana-body open" id="body-s1">
+        <div class="ingreso-meta">
+          <span>💸 Gastos fijos:</span><span class="chip chip-a">$3,000 / semana</span>
+          <span>— cubiertos con Uber</span>
+          <span>|</span>
+          <span>🎯 Meta:</span><span class="chip chip-o">Preparación</span>
+        </div>
+
+        <!-- LUNES 20 -->
+        <div class="dia-block">
+          <div class="dia-header" onclick="toggleDia('lun20')">
+            <span class="dia-nombre">LUNES</span>
+            <span class="dia-fecha">20 abril</span>
+            <span class="dia-pct" id="pct-lun20">0%</span>
+            <span class="dia-arrow" id="darr-lun20">▼</span>
+          </div>
+          <div class="dia-body" id="lun20">
+            <div class="meta-dia"><div class="meta-dia-label">🎯 Victoria del día</div><div class="meta-dia-texto">Saber exactamente qué productos comprar el lunes 27 y a qué precio los consigues en el mercado</div></div>
+            <div class="ganancia-box">
+              <div class="ganancia-header"><div class="ganancia-titulo">💰 Registra tus ingresos en tiempo real</div><div class="ganancia-total" id="gt-lun20">$0</div></div>
+              <div class="g-row">
+                <input class="g-input" type="number" placeholder="$ Monto" id="gm-lun20" min="0">
+                <input class="g-input g-desc" type="text" placeholder="Descripción (Uber tarde...)" id="gd-lun20">
+                <button class="btn-add" onclick="addG('lun20')">+ Agregar</button>
+              </div>
+              <div class="g-list" id="gl-lun20"></div>
+            </div>
+            <div class="h-label">Mañana temprano</div>
+            <div class="task" onclick="toggleT(this,'lun20',0)"><div class="chk"></div><div><div class="t-txt">Busca en Google Maps "Tepito accesorios celular" y "Mercado Lagunilla CDMX" — guarda las ubicaciones en tu cel</div><div class="t-hora">7:00–7:30 AM</div></div></div>
+            <div class="task" onclick="toggleT(this,'lun20',1)"><div class="chk"></div><div><div class="t-txt">Haz lista de 5 productos a investigar: cables USB-C, Lightning, audífonos básicos, protectores de pantalla, cases, cargadores</div><div class="t-hora">7:30–8:00 AM</div></div></div>
+            <div class="h-label">Tarde — Visita de campo (2–3 horas)</div>
+            <div class="task" onclick="toggleT(this,'lun20',2)"><div class="chk"></div><div><div class="t-txt">Ve a Tepito o tu mercado más cercano. Anota PRECIO DE COSTO de mínimo 5 productos con nombre del vendedor</div><div class="t-hora">2:00–5:00 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'lun20',3)"><div class="chk"></div><div><div class="t-txt">Fotografía los productos. Anota: nombre, precio costo, calidad (1–5), contacto del proveedor</div><div class="t-hora">En campo</div></div></div>
+            <div class="task" onclick="toggleT(this,'lun20',4)"><div class="chk"></div><div><div class="t-txt">Habla con al menos 1 proveedor — pregunta precio por volumen (10–20 piezas) y guarda su WhatsApp</div><div class="t-hora">En campo</div></div></div>
+            <div class="task" onclick="toggleT(this,'lun20',5)"><div class="chk"></div><div><div class="t-txt">Anota los precios al público de esos productos en tienditas cercanas — eso es tu margen de ganancia potencial</div><div class="t-hora">De regreso</div></div></div>
+            <div class="h-label">Noche — Contenido</div>
+            <div class="task" onclick="toggleT(this,'lun20',6)"><div class="chk"></div><div><div class="t-txt">GRABA TikTok #1: "Soy papá de familia, bebé en camino, arranco negocio desde $0 con $2,000 — te muestro todo" — sin editar demasiado, lo crudo vende</div><div class="t-hora">9:00–9:30 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'lun20',7)"><div class="chk"></div><div><div class="t-txt">Registra tus ingresos de Uber del día arriba en tiempo real — no esperes al final</div><div class="t-hora">Durante el día</div></div></div>
+          </div>
+        </div>
+
+        <!-- MARTES 21 -->
+        <div class="dia-block">
+          <div class="dia-header" onclick="toggleDia('mar21')">
+            <span class="dia-nombre">MARTES</span><span class="dia-fecha">21 abril</span>
+            <span class="dia-pct" id="pct-mar21">0%</span><span class="dia-arrow" id="darr-mar21">▼</span>
+          </div>
+          <div class="dia-body" id="mar21">
+            <div class="meta-dia"><div class="meta-dia-label">🎯 Victoria del día</div><div class="meta-dia-texto">5 tiendas mapeadas con nombre del dueño y teléfono — tus futuros puntos de venta</div></div>
+            <div class="ganancia-box">
+              <div class="ganancia-header"><div class="ganancia-titulo">💰 Ingresos del día en tiempo real</div><div class="ganancia-total" id="gt-mar21">$0</div></div>
+              <div class="g-row"><input class="g-input" type="number" placeholder="$ Monto" id="gm-mar21" min="0"><input class="g-input g-desc" type="text" placeholder="Descripción" id="gd-mar21"><button class="btn-add" onclick="addG('mar21')">+ Agregar</button></div>
+              <div class="g-list" id="gl-mar21"></div>
+            </div>
+            <div class="h-label">Durante el día (combinar con Uber)</div>
+            <div class="task" onclick="toggleT(this,'mar21',0)"><div class="chk"></div><div><div class="t-txt">En tus rutas de Uber, identifica papelerías, cibers, misceláneas, estéticas, tienditas — anota en las notas del cel</div><div class="t-hora">Todo el día</div></div></div>
+            <div class="task" onclick="toggleT(this,'mar21',1)"><div class="chk"></div><div><div class="t-txt">Entra a 3 tiendas como cliente — observa qué accesorios tienen o NO tienen, y a qué precio los venden al público</div><div class="t-hora">Al pasar</div></div></div>
+            <div class="task" onclick="toggleT(this,'mar21',2)"><div class="chk"></div><div><div class="t-txt">Habla con el dueño de 1 tienda: "Oiga, ¿vende accesorios de celular? ¿Le interesaría que le trajera algunos a buen precio?" — solo sondea, no vendas aún</div><div class="t-hora">Al pasar</div></div></div>
+            <div class="task" onclick="toggleT(this,'mar21',3)"><div class="chk"></div><div><div class="t-txt">Guarda en WhatsApp: nombre de la tienda, nombre del dueño, colonia, número — crea un chat "Tiendas Potenciales"</div><div class="t-hora">Al terminar el día</div></div></div>
+            <div class="h-label">Noche</div>
+            <div class="task" onclick="toggleT(this,'mar21',4)"><div class="chk"></div><div><div class="t-txt">TikTok #2: "Así investigo el mercado antes de gastar mi primer peso — lo que casi nadie hace" — muestra tu recorrido</div><div class="t-hora">9:00–9:30 PM</div></div></div>
+          </div>
+        </div>
+
+        <!-- MIÉRCOLES 22 -->
+        <div class="dia-block">
+          <div class="dia-header" onclick="toggleDia('mie22')">
+            <span class="dia-nombre">MIÉRCOLES</span><span class="dia-fecha">22 abril</span>
+            <span class="dia-pct" id="pct-mie22">0%</span><span class="dia-arrow" id="darr-mie22">▼</span>
+          </div>
+          <div class="dia-body" id="mie22">
+            <div class="meta-dia"><div class="meta-dia-label">🎯 Victoria del día</div><div class="meta-dia-texto">Lista exacta de compra del lunes 27: qué producto, cuánto, a quién le compras, precio costo y precio venta</div></div>
+            <div class="ganancia-box">
+              <div class="ganancia-header"><div class="ganancia-titulo">💰 Ingresos del día en tiempo real</div><div class="ganancia-total" id="gt-mie22">$0</div></div>
+              <div class="g-row"><input class="g-input" type="number" placeholder="$ Monto" id="gm-mie22" min="0"><input class="g-input g-desc" type="text" placeholder="Descripción" id="gd-mie22"><button class="btn-add" onclick="addG('mie22')">+ Agregar</button></div>
+              <div class="g-list" id="gl-mie22"></div>
+            </div>
+            <div class="h-label">Mañana — Los números</div>
+            <div class="task" onclick="toggleT(this,'mie22',0)"><div class="chk"></div><div><div class="t-txt">Calcula el margen: precio costo × 2.2 = precio venta en tienda. Ejemplo: cable a $15 costo → vendes a $33–$35</div><div class="t-hora">7:00–7:45 AM</div></div></div>
+            <div class="task" onclick="toggleT(this,'mie22',1)"><div class="chk"></div><div><div class="t-txt">Arma tu mix de compra con $1,400 (reserva $600): cables 30 pzas + audífonos 15 + protectores 15 + cases 10 — ajusta según tus datos de campo</div><div class="t-hora">7:45–8:30 AM</div></div></div>
+            <div class="task" onclick="toggleT(this,'mie22',2)"><div class="chk"></div><div><div class="t-txt">Calcula: si vendes TODO el inventario, ¿cuánto ganas? Escríbelo en papel y ponlo donde lo veas todos los días</div><div class="t-hora">8:30 AM</div></div></div>
+            <div class="h-label">Tarde</div>
+            <div class="task" onclick="toggleT(this,'mie22',3)"><div class="chk"></div><div><div class="t-txt">Contacta a tus proveedores por WhatsApp: "El lunes compro [tu lista], ¿tienes disponibilidad? ¿Me das precio por volumen?"</div><div class="t-hora">2:00–4:00 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'mie22',4)"><div class="chk"></div><div><div class="t-txt">Configura WhatsApp Business: foto profesional, nombre "Red de Impulso Accesorios", descripción del negocio, horario</div><div class="t-hora">4:00–5:00 PM</div></div></div>
+            <div class="h-label">Noche</div>
+            <div class="task" onclick="toggleT(this,'mie22',5)"><div class="chk"></div><div><div class="t-txt">TikTok #3: "Los números reales del negocio — compro a $15 y vendo a $35, ¿es negocio o no?" — muestra tu tabla de rentabilidad en cámara</div><div class="t-hora">9:00–9:30 PM</div></div></div>
+          </div>
+        </div>
+
+        <!-- JUEVES 23 -->
+        <div class="dia-block">
+          <div class="dia-header" onclick="toggleDia('jue23')">
+            <span class="dia-nombre">JUEVES</span><span class="dia-fecha">23 abril</span>
+            <span class="dia-pct" id="pct-jue23">0%</span><span class="dia-arrow" id="darr-jue23">▼</span>
+          </div>
+          <div class="dia-body" id="jue23">
+            <div class="meta-dia"><div class="meta-dia-label">🎯 Victoria del día</div><div class="meta-dia-texto">Al menos 2 dueños de tienda ya saben que el lunes llegas con producto — tienen tu número guardado</div></div>
+            <div class="ganancia-box">
+              <div class="ganancia-header"><div class="ganancia-titulo">💰 Ingresos del día en tiempo real</div><div class="ganancia-total" id="gt-jue23">$0</div></div>
+              <div class="g-row"><input class="g-input" type="number" placeholder="$ Monto" id="gm-jue23" min="0"><input class="g-input g-desc" type="text" placeholder="Descripción" id="gd-jue23"><button class="btn-add" onclick="addG('jue23')">+ Agregar</button></div>
+              <div class="g-list" id="gl-jue23"></div>
+            </div>
+            <div class="h-label">Mediodía — Primera ronda de puertas</div>
+            <div class="task" onclick="toggleT(this,'jue23',0)"><div class="chk"></div><div><div class="t-txt">Visita las 5 tiendas mapeadas. Script: "Buenas, trabajo con accesorios de celular y el lunes traigo muestras, ¿me da chance de volver?" — nada más</div><div class="t-hora">12:00–3:00 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'jue23',1)"><div class="chk"></div><div><div class="t-txt">No presiones hoy — solo siembra. Si alguien dice sí, consigue su nombre y cuántas piezas podría necesitar. Guarda su número.</div><div class="t-hora">En campo</div></div></div>
+            <div class="task" onclick="toggleT(this,'jue23',2)"><div class="chk"></div><div><div class="t-txt">Anota resultado de cada tienda: ✓ interesado / ✗ no / → pendiente — eso es tu primer CRM</div><div class="t-hora">Al terminar</div></div></div>
+            <div class="task" onclick="toggleT(this,'jue23',3)"><div class="chk"></div><div><div class="t-txt">Apunta qué objeción te dieron los que dijeron no — eso vale oro para mejorar tu pitch la próxima semana</div><div class="t-hora">Noche</div></div></div>
+            <div class="h-label">Noche</div>
+            <div class="task" onclick="toggleT(this,'jue23',4)"><div class="chk"></div><div><div class="t-txt">TikTok #4: "Toqué 5 puertas hoy para vender — esto fue lo que pasó de verdad" — honestidad total, eso es lo que más engancha</div><div class="t-hora">9:00–9:30 PM</div></div></div>
+          </div>
+        </div>
+
+        <!-- VIERNES 24 -->
+        <div class="dia-block">
+          <div class="dia-header" onclick="toggleDia('vie24')">
+            <span class="dia-nombre">VIERNES</span><span class="dia-fecha">24 abril</span>
+            <span class="dia-pct" id="pct-vie24">0%</span><span class="dia-arrow" id="darr-vie24">▼</span>
+          </div>
+          <div class="dia-body" id="vie24">
+            <div class="meta-dia"><div class="meta-dia-label">🎯 Victoria del día</div><div class="meta-dia-texto">Uber al máximo hoy — viernes es el mejor día de la semana. Meta: $700–$900 para tener los $2,000 asegurados</div></div>
+            <div class="ganancia-box">
+              <div class="ganancia-header"><div class="ganancia-titulo">💰 Ingresos del día en tiempo real</div><div class="ganancia-total" id="gt-vie24">$0</div></div>
+              <div class="g-row"><input class="g-input" type="number" placeholder="$ Monto" id="gm-vie24" min="0"><input class="g-input g-desc" type="text" placeholder="Descripción" id="gd-vie24"><button class="btn-add" onclick="addG('vie24')">+ Agregar</button></div>
+              <div class="g-list" id="gl-vie24"></div>
+            </div>
+            <div class="h-label">Día completo — Uber fuerte</div>
+            <div class="task" onclick="toggleT(this,'vie24',0)"><div class="chk"></div><div><div class="t-txt">Arranca temprano con Uber — viernes el dinero está en la calle. Meta: $700–$900 de ingresos hoy. Registra cada turno aquí arriba.</div><div class="t-hora">6:00 AM en adelante</div></div></div>
+            <div class="task" onclick="toggleT(this,'vie24',1)"><div class="chk"></div><div><div class="t-txt">Pausa de comida: confirma por WhatsApp a proveedores "El lunes llego a comprar [lista]. ¿Todo disponible?"</div><div class="t-hora">Pausa comida</div></div></div>
+            <div class="task" onclick="toggleT(this,'vie24',2)"><div class="chk"></div><div><div class="t-txt">Manda WhatsApp a los dueños de tienda interesados: "Hola [nombre], el lunes les traigo muestras por la mañana — ¿entre 10 y 12 les viene?"</div><div class="t-hora">Pausa comida</div></div></div>
+            <div class="h-label">Noche</div>
+            <div class="task" onclick="toggleT(this,'vie24',3)"><div class="chk"></div><div><div class="t-txt">Escribe en papel tu lista de compra final del lunes: producto / cantidad / proveedor / precio costo / precio venta</div><div class="t-hora">8:30–9:00 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'vie24',4)"><div class="chk"></div><div><div class="t-txt">TikTok #5: "Resumen semana 1 — lo que aprendí investigando el mercado antes de invertir mi primer peso"</div><div class="t-hora">9:00–9:30 PM</div></div></div>
+          </div>
+        </div>
+
+        <!-- SÁBADO 25 -->
+        <div class="dia-block">
+          <div class="dia-header" onclick="toggleDia('sab25')">
+            <span class="dia-nombre">SÁBADO</span><span class="dia-fecha">25 abril</span>
+            <span class="dia-pct" id="pct-sab25">0%</span><span class="dia-arrow" id="darr-sab25">▼</span>
+          </div>
+          <div class="dia-body" id="sab25">
+            <div class="meta-dia"><div class="meta-dia-label">🎯 Victoria del día</div><div class="meta-dia-texto">Los $2,000 separados físicamente y tu esposa conoce el plan — eso vale más que cualquier venta</div></div>
+            <div class="ganancia-box">
+              <div class="ganancia-header"><div class="ganancia-titulo">💰 Ingresos del día en tiempo real</div><div class="ganancia-total" id="gt-sab25">$0</div></div>
+              <div class="g-row"><input class="g-input" type="number" placeholder="$ Monto" id="gm-sab25" min="0"><input class="g-input g-desc" type="text" placeholder="Descripción" id="gd-sab25"><button class="btn-add" onclick="addG('sab25')">+ Agregar</button></div>
+              <div class="g-list" id="gl-sab25"></div>
+            </div>
+            <div class="h-label">Mañana — Último empuje Uber</div>
+            <div class="task" onclick="toggleT(this,'sab25',0)"><div class="chk"></div><div><div class="t-txt">Uber mañana para cerrar la semana — separa los $2,000 de inversión en un sobre o apartado de la cuenta. Son intocables.</div><div class="t-hora">7:00 AM–12:00 PM</div></div></div>
+            <div class="h-label">Tarde — Lo más importante de la semana</div>
+            <div class="task" onclick="toggleT(this,'sab25',1)"><div class="chk"></div><div><div class="t-txt">Siente a tu esposa y muéstrale esta app — que vea el plan, la meta del millón y lo que hiciste esta semana. Su apoyo es el motor más poderoso.</div><div class="t-hora">2:00–3:00 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'sab25',2)"><div class="chk"></div><div><div class="t-txt">Platiquen qué parte del dinero va para el bebé y qué parte queda para el negocio — acuerden juntos. Transparencia total.</div><div class="t-hora">3:00 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'sab25',3)"><div class="chk"></div><div><div class="t-txt">Revisa todos tus TikToks de la semana — responde CADA comentario, aunque sean 3. Cada respuesta es engagement real.</div><div class="t-hora">5:00 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'sab25',4)"><div class="chk"></div><div><div class="t-txt">Actualiza el contador de seguidores TikTok, videos publicados y puntos de venta en la pestaña Contadores</div><div class="t-hora">6:00 PM</div></div></div>
+          </div>
+        </div>
+
+        <!-- DOMINGO 26 -->
+        <div class="dia-block">
+          <div class="dia-header" onclick="toggleDia('dom26')">
+            <span class="dia-nombre">DOMINGO</span><span class="dia-fecha">26 abril</span>
+            <span class="dia-pct" id="pct-dom26">0%</span><span class="dia-arrow" id="darr-dom26">▼</span>
+          </div>
+          <div class="dia-body" id="dom26">
+            <div class="meta-dia"><div class="meta-dia-label">🎯 Victoria del día</div><div class="meta-dia-texto">Descansar completo. El emprendedor quemado no llega al millón — hoy inviertes en energía para la semana 2</div></div>
+            <div class="ganancia-box">
+              <div class="ganancia-header"><div class="ganancia-titulo">💰 Ingresos del día</div><div class="ganancia-total" id="gt-dom26">$0</div></div>
+              <div class="g-row"><input class="g-input" type="number" placeholder="$ Monto" id="gm-dom26" min="0"><input class="g-input g-desc" type="text" placeholder="Descripción" id="gd-dom26"><button class="btn-add" onclick="addG('dom26')">+ Agregar</button></div>
+              <div class="g-list" id="gl-dom26"></div>
+            </div>
+            <div class="h-label">Día de familia — Sin trabajo obligatorio</div>
+            <div class="task" onclick="toggleT(this,'dom26',0)"><div class="chk"></div><div><div class="t-txt">Día familiar completo — tu esposa, tu hija de secundaria y el bebé que viene. Ellos son el por qué de todo esto.</div><div class="t-hora">Todo el día</div></div></div>
+            <div class="task" onclick="toggleT(this,'dom26',1)"><div class="chk"></div><div><div class="t-txt">Noche: revisa esta app, marca todo lo que completaste esta semana y toma foto del progreso</div><div class="t-hora">8:00 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'dom26',2)"><div class="chk"></div><div><div class="t-txt">Manda el reporte a Marco (dime cuántas tareas completaste, cuánto ganaste, cuántos seguidores tienes) para cargar la Semana 2</div><div class="t-hora">8:30 PM</div></div></div>
+            <div class="task" onclick="toggleT(this,'dom26',3)"><div class="chk"></div><div><div class="t-txt">Duerme bien — el lunes 27 gastas tus $2,000 en tu primer inventario real. El juego empieza de verdad.</div><div class="t-hora">Noche</div></div></div>
+          </div>
+        </div>
+
+      </div><!-- fin body s1 -->
+    </div><!-- fin semana 1 -->
+
+    <div class="semana-card semana-locked">
+      <div class="semana-header" style="cursor:default;">
+        <div><div class="semana-titulo">SEMANA 2 · 27 ABR – 3 MAYO</div><div class="semana-sub">🔒 Se desbloquea el domingo 26 cuando Marco analice tu Semana 1</div></div>
+        <span class="semana-pct">—</span>
+      </div>
+    </div>
+
+    <div class="cita">"El millón no llega en un día.<br>Llega en <span>366 días de disciplina.</span>"</div>
+  </div>
+
+  <!-- ======= CONTADORES ======= -->
+  <div class="panel" id="panel-contadores">
+    <div class="stats-row">
+      <div class="s-card"><div class="s-label">TikTok</div><div class="s-val" id="val-tiktok">0</div><div class="s-sub">Seguidores</div><button class="s-btn" onclick="openModal('tiktok','TikTok Seguidores')">Actualizar</button></div>
+      <div class="s-card"><div class="s-label">YouTube</div><div class="s-val" id="val-youtube">0</div><div class="s-sub">Suscriptores</div><button class="s-btn" onclick="openModal('youtube','YouTube Suscriptores')">Actualizar</button></div>
+      <div class="s-card"><div class="s-label">Videos</div><div class="s-val" id="val-videos">0</div><div class="s-sub">Publicados</div><button class="s-btn" onclick="openModal('videos','Videos Publicados')">Actualizar</button></div>
+      <div class="s-card"><div class="s-label">Puntos venta</div><div class="s-val" id="val-puntos">0</div><div class="s-sub">Tiendas activas</div><button class="s-btn" onclick="openModal('puntos','Puntos de Venta')">Actualizar</button></div>
+      <div class="s-card"><div class="s-label">Clientes</div><div class="s-val" id="val-clientes">0</div><div class="s-sub">Que han comprado</div><button class="s-btn" onclick="openModal('clientes','Clientes Activos')">Actualizar</button></div>
+      <div class="s-card"><div class="s-label">Semanas activo</div><div class="s-val" id="val-semanas">0</div><div class="s-sub">Desde 20 abril</div></div>
+    </div>
+    <div class="fin-card" style="margin-top:4px">
+      <div class="fin-titulo">METAS DE CONTADORES</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="font-size:12px;color:var(--txt2);padding:7px 0;border-bottom:1px solid var(--borde)"><strong style="color:var(--txt)">TikTok Mes 1:</strong> 100 seguidores</div>
+        <div style="font-size:12px;color:var(--txt2);padding:7px 0;border-bottom:1px solid var(--borde)"><strong style="color:var(--txt)">TikTok Mes 3:</strong> 1,000 seguidores</div>
+        <div style="font-size:12px;color:var(--txt2);padding:7px 0;border-bottom:1px solid var(--borde)"><strong style="color:var(--txt)">TikTok Mes 6:</strong> 3,000 seguidores</div>
+        <div style="font-size:12px;color:var(--txt2);padding:7px 0;border-bottom:1px solid var(--borde)"><strong style="color:var(--txt)">Puntos venta Mes 1:</strong> 5–10</div>
+        <div style="font-size:12px;color:var(--txt2);padding:7px 0"><strong style="color:var(--txt)">Videos Semana 1:</strong> 5 publicados</div>
+        <div style="font-size:12px;color:var(--txt2);padding:7px 0"><strong style="color:var(--txt)">Videos / semana:</strong> 5–7</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= GUIONES ======= -->
+  <div class="panel" id="panel-guiones">
+    <div style="font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:11px;">Guiones Semana 1 · TikTok / YouTube Shorts</div>
+
+    <div class="g-card">
+      <div class="g-dia">Lunes 20 · Video #1</div>
+      <div class="g-titulo">El arranque — La historia que engancha</div>
+      <div class="g-hook">"Soy padre de familia, mi esposa está embarazada, no tengo trabajo fijo y hoy arranco un negocio desde cero con $2,000. Te voy a mostrar absolutamente todo."</div>
+      <ul class="g-pts">
+        <li>Preséntate: quién eres, tu familia, tu situación real sin filtros (30 seg)</li>
+        <li>Anuncia la meta: del Uber Eats al primer millón en 12 meses (20 seg)</li>
+        <li>Muestra el dinero que vas a invertir en cámara — $2,000 en efectivo (10 seg)</li>
+        <li>CTA: "Sígueme para ver si lo logro o si me quiebro en el intento" (10 seg)</li>
+        <li>Duración ideal: 60–75 segundos. Lo crudo y honesto vende más que lo editado</li>
+      </ul>
+    </div>
+
+    <div class="g-card">
+      <div class="g-dia">Martes 21 · Video #2</div>
+      <div class="g-titulo">La investigación — Lo que nadie hace</div>
+      <div class="g-hook">"Antes de gastar un solo peso, hago esto — y casi nadie lo hace antes de invertir su dinero"</div>
+      <ul class="g-pts">
+        <li>Muestra tu recorrido por tiendas (graba mientras caminas, sin miedo)</li>
+        <li>Explica en voz alta qué observas: precios al público, qué les falta, la demanda</li>
+        <li>Da 1 tip de negocio real que aprendiste ese día</li>
+        <li>CTA: "Mañana te muestro si esto es rentable — los números reales sin mentiras"</li>
+      </ul>
+    </div>
+
+    <div class="g-card">
+      <div class="g-dia">Miércoles 22 · Video #3</div>
+      <div class="g-titulo">Los números — Transparencia total</div>
+      <div class="g-hook">"¿Cuánto gana un negocio de accesorios de celular de verdad? Te muestro los números reales, no los de Instagram."</div>
+      <ul class="g-pts">
+        <li>Muestra en cámara tu hoja o foto con costos vs precio venta</li>
+        <li>Explica: "compro a $15, vendo a $35 — eso es 133% de ganancia bruta"</li>
+        <li>Calcula en vivo: si vendo todo mi inventario de $1,400, gano $X</li>
+        <li>CTA: "El lunes compro. El martes lo pongo a vender. Sígueme."</li>
+      </ul>
+    </div>
+
+    <div class="g-card">
+      <div class="g-dia">Jueves 23 · Video #4</div>
+      <div class="g-titulo">El rechazo — El video que más va a conectar</div>
+      <div class="g-hook">"Toqué 5 puertas hoy para vender mi producto. Esto fue lo que pasó de verdad — sin filtros."</div>
+      <ul class="g-pts">
+        <li>Cuenta honestamente cuántos dijeron sí, cuántos no, cómo te sentiste</li>
+        <li>Qué aprendiste de los rechazos (contenido GOLD — la gente se identifica)</li>
+        <li>Normaliza: "El 80% dice no — los negocios se hacen con el 20%"</li>
+        <li>CTA: "La semana que viene vuelvo con el producto en la mano"</li>
+      </ul>
+    </div>
+
+    <div class="g-card">
+      <div class="g-dia">Viernes/Sábado · Video #5</div>
+      <div class="g-titulo">Resumen Semana 1 — El cliffhanger</div>
+      <div class="g-hook">"Mi primera semana como emprendedor: lo que aprendí, lo que me asustó y lo que me emocionó — y lo que pasa el lunes"</div>
+      <ul class="g-pts">
+        <li>Recap honesto de los 5 días — máximo 90 segundos</li>
+        <li>Muestra el contador de seguidores — agradece a cada uno</li>
+        <li>Anticipa: "El lunes gasto mis $2,000 en mercancía real. Sígueme para ver qué pasa."</li>
+        <li>El cliffhanger es tu mejor herramienta — nunca cierres un video sin un "próximo episodio"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ======= FINANZAS ======= -->
+  <div class="panel" id="panel-finanzas">
+    <div class="fin-card">
+      <div class="fin-titulo">FINANZAS SEMANA 1 · 20–26 ABRIL</div>
+      <div class="fin-grid">
+        <div class="fin-box"><div class="fin-label">Gastos fijos</div><div class="fin-monto" style="color:var(--rojo)">$3,000</div><div class="fin-sub">Cubiertos con Uber</div></div>
+        <div class="fin-box"><div class="fin-label">Total ingresos semana</div><div class="fin-monto" style="color:var(--verde)" id="fin-total">$0</div><div class="fin-sub">Uber + proyecto (en tiempo real)</div></div>
+        <div class="fin-box"><div class="fin-label">Inversión lunes 27</div><div class="fin-monto" style="color:var(--azul)">$2,000</div><div class="fin-sub">Para primer inventario</div></div>
+        <div class="fin-box"><div class="fin-label">Reserva de seguridad</div><div class="fin-monto" style="color:var(--oro)">$600</div><div class="fin-sub">No tocar nunca</div></div>
+      </div>
+    </div>
+    <div class="fin-card">
+      <div class="fin-titulo">REGISTRO DIARIO DE INGRESOS</div>
+      <div style="display:grid;grid-template-columns:80px 1fr auto;gap:6px;padding:5px 0;border-bottom:1px solid var(--borde);font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.05em;">
+        <span>Día</span><span>Entradas</span><span>Total</span>
+      </div>
+      <div id="fin-lun20" class="fin-dia-row"></div>
+      <div id="fin-mar21" class="fin-dia-row"></div>
+      <div id="fin-mie22" class="fin-dia-row"></div>
+      <div id="fin-jue23" class="fin-dia-row"></div>
+      <div id="fin-vie24" class="fin-dia-row"></div>
+      <div id="fin-sab25" class="fin-dia-row"></div>
+      <div id="fin-dom26" class="fin-dia-row"></div>
+    </div>
+  </div>
+
+</div><!-- fin main -->
+
+<!-- MODALES -->
+<div class="modal-bg" id="modal-gen">
+  <div class="modal">
+    <div class="modal-titulo" id="modal-gen-titulo">Actualizar</div>
+    <input class="m-input" type="number" id="modal-gen-inp" placeholder="Nuevo valor" min="0">
+    <div class="m-btns">
+      <button class="btn btn-p" onclick="saveModal()">Guardar</button>
+      <button class="btn btn-s" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+<div class="modal-bg" id="modal-millon">
+  <div class="modal">
+    <div class="modal-titulo">Actualizar Progreso</div>
+    <div style="font-size:11px;color:var(--txt2);margin-bottom:9px;">Total acumulado en ingresos del proyecto desde el 20 de abril (no cuentes lo de Uber).</div>
+    <input class="m-input" type="number" id="modal-millon-inp" placeholder="Ej: 5000" min="0">
+    <div class="m-btns">
+      <button class="btn btn-p" onclick="saveMillon()">Guardar</button>
+      <button class="btn btn-s" onclick="document.getElementById('modal-millon').classList.remove('open')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== ESTADO =====
+let E = JSON.parse(localStorage.getItem('biblia3')||'{}');
+['tasks','counters','ganancias'].forEach(k=>{ if(!E[k]) E[k]={}; });
+if(!E.counters.tiktok) E.counters={tiktok:0,youtube:0,videos:0,puntos:0,clientes:0};
+if(!E.millon) E.millon=0;
+if(!E.tema) E.tema='light';
+function save(){ localStorage.setItem('biblia3',JSON.stringify(E)); }
+
+// ===== TEMA =====
+function applyT(t){ document.documentElement.setAttribute('data-theme',t); document.getElementById('tema-btn').textContent=t==='dark'?'☀️':'🌙'; }
+function toggleTema(){ E.tema=E.tema==='dark'?'light':'dark'; applyT(E.tema); save(); }
+applyT(E.tema);
+
+// ===== FECHA =====
+const D=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const HOY=new Date();
+document.getElementById('fecha-hoy').textContent=D[HOY.getDay()]+' '+HOY.getDate()+'\n'+M[HOY.getMonth()];
+const INICIO=new Date('2026-04-20');
+document.getElementById('val-semanas').textContent=Math.max(0,Math.floor((HOY-INICIO)/(7*24*3600*1000)));
+
+// ===== TABS =====
+function cambiarTab(p,btn){
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('panel-'+p).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== SEMANAS/DIAS =====
+function toggleSem(id){
+  const b=document.getElementById('body-'+id),a=document.getElementById('arr-'+id);
+  b.classList.toggle('open'); a.classList.toggle('open');
+}
+function toggleDia(id){
+  const b=document.getElementById(id),a=document.getElementById('darr-'+id);
+  b.classList.toggle('open'); if(a) a.classList.toggle('open');
+}
+
+// ===== TASKS =====
+const DIAS=['lun20','mar21','mie22','jue23','vie24','sab25','dom26'];
+function toggleT(item,dia,idx){
+  const key=dia+'_'+idx,chk=item.querySelector('.chk'),txt=item.querySelector('.t-txt');
+  const done=!E.tasks[key]; E.tasks[key]=done; save();
+  chk.classList.toggle('done',done); txt.classList.toggle('done',done);
+  updatePcts();
+}
+function updatePcts(){
+  let tot=0,done=0;
+  DIAS.forEach(id=>{
+    const b=document.getElementById(id); if(!b) return;
+    const tasks=b.querySelectorAll('.task'); let d=0;
+    tasks.forEach((_,i)=>{ if(E.tasks[id+'_'+i]) d++; });
+    tot+=tasks.length; done+=d;
+    const el=document.getElementById('pct-'+id);
+    if(el) el.textContent=(tasks.length?Math.round(d/tasks.length*100):0)+'%';
+  });
+  const pct=tot?Math.round(done/tot*100):0;
+  document.getElementById('pct-s1').textContent=pct+'%';
+  document.getElementById('res-tareas').textContent=pct+'%';
+}
+function restoreTasks(){
+  DIAS.forEach(id=>{
+    const b=document.getElementById(id); if(!b) return;
+    b.querySelectorAll('.task').forEach((item,i)=>{
+      if(E.tasks[id+'_'+i]){
+        item.querySelector('.chk').classList.add('done');
+        item.querySelector('.t-txt').classList.add('done');
+      }
+    });
+  });
+  updatePcts();
+}
+
+// ===== GANANCIAS =====
+function ahora(){ const n=new Date(); return n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0'); }
+function addG(id){
+  const m=parseFloat(document.getElementById('gm-'+id).value);
+  const d=document.getElementById('gd-'+id).value.trim()||'Ingreso';
+  if(!m||m<=0) return;
+  if(!E.ganancias[id]) E.ganancias[id]=[];
+  E.ganancias[id].push({m,d,h:ahora(),id:Date.now()});
+  save();
+  document.getElementById('gm-'+id).value='';
+  document.getElementById('gd-'+id).value='';
+  renderG(id); updateFin(); autoMillon();
+}
+function delG(dia,gid){
+  E.ganancias[dia]=(E.ganancias[dia]||[]).filter(g=>g.id!==gid);
+  save(); renderG(dia); updateFin(); autoMillon();
+}
+function totalDia(id){ return (E.ganancias[id]||[]).reduce((s,g)=>s+g.m,0); }
+function renderG(id){
+  const list=document.getElementById('gl-'+id); if(!list) return;
+  const items=E.ganancias[id]||[];
+  list.innerHTML=items.map(g=>`<div class="g-entry"><span class="g-monto">$${g.m.toLocaleString('es-MX')}</span><span class="g-desc2">${g.d}</span><span class="g-hora">${g.h}</span><button class="btn-del" onclick="delG('${id}',${g.id})">✕</button></div>`).join('');
+  const el=document.getElementById('gt-'+id);
+  if(el) el.textContent='$'+totalDia(id).toLocaleString('es-MX');
+}
+function restoreG(){ DIAS.forEach(id=>renderG(id)); }
+const NOMBRES={lun20:'Lun 20',mar21:'Mar 21',mie22:'Mié 22',jue23:'Jue 23',vie24:'Vie 24',sab25:'Sáb 25',dom26:'Dom 26'};
+function updateFin(){
+  let total=0;
+  DIAS.forEach(id=>{
+    const t=totalDia(id); total+=t;
+    const el=document.getElementById('fin-'+id); if(!el) return;
+    if(!t){ el.innerHTML=''; el.style.display='none'; return; }
+    el.style.display='grid';
+    const descs=(E.ganancias[id]||[]).map(g=>g.d).join(', ');
+    el.innerHTML=`<span style="font-size:11px;color:var(--txt3)">${NOMBRES[id]}</span><span style="font-size:11px;color:var(--txt2)">${descs}</span><span style="font-weight:600;color:var(--verde);font-family:'DM Mono',monospace;font-size:11px">$${t.toLocaleString('es-MX')}</span>`;
+  });
+  document.getElementById('fin-total').textContent='$'+total.toLocaleString('es-MX');
+  document.getElementById('res-ganancia').textContent='$'+total.toLocaleString('es-MX');
+}
+function autoMillon(){
+  let t=0; DIAS.forEach(id=>t+=totalDia(id));
+  if(t>E.millon){ E.millon=t; save(); }
+  showMillon(E.millon);
+}
+
+// ===== MILLÓN =====
+function showMillon(v){
+  const pct=Math.min(100,(v/1000000)*100);
+  document.getElementById('millon-fill').style.width=Math.max(pct,.3)+'%';
+  document.getElementById('millon-num').textContent='$'+Math.round(v).toLocaleString('es-MX')+' / $1,000,000';
+}
+function openModalMillon(){ document.getElementById('modal-millon-inp').value=E.millon||''; document.getElementById('modal-millon').classList.add('open'); }
+function saveMillon(){ const v=parseInt(document.getElementById('modal-millon-inp').value)||0; E.millon=v; save(); showMillon(v); document.getElementById('modal-millon').classList.remove('open'); }
+
+// ===== CONTADORES =====
+let mKey='';
+function openModal(key,titulo){ mKey=key; document.getElementById('modal-gen-titulo').textContent=titulo; document.getElementById('modal-gen-inp').value=E.counters[key]||''; document.getElementById('modal-gen').classList.add('open'); setTimeout(()=>document.getElementById('modal-gen-inp').focus(),120); }
+function saveModal(){ const v=parseInt(document.getElementById('modal-gen-inp').value)||0; E.counters[mKey]=v; save(); const el=document.getElementById('val-'+mKey); if(el) el.textContent=v.toLocaleString('es-MX'); closeModal(); }
+function closeModal(){ document.getElementById('modal-gen').classList.remove('open'); }
+function restoreCounters(){ Object.keys(E.counters).forEach(k=>{ const el=document.getElementById('val-'+k); if(el) el.textContent=(E.counters[k]||0).toLocaleString('es-MX'); }); }
+
+// cerrar modales fuera
+['modal-gen','modal-millon'].forEach(id=>{ document.getElementById(id).addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open'); }); });
+document.getElementById('modal-gen-inp').addEventListener('keydown',e=>{ if(e.key==='Enter') saveModal(); });
+document.getElementById('modal-millon-inp').addEventListener('keydown',e=>{ if(e.key==='Enter') saveMillon(); });
+DIAS.forEach(id=>{
+  const gm=document.getElementById('gm-'+id), gd=document.getElementById('gd-'+id);
+  if(gm) gm.addEventListener('keydown',e=>{ if(e.key==='Enter') addG(id); });
+  if(gd) gd.addEventListener('keydown',e=>{ if(e.key==='Enter') addG(id); });
+});
+
+// ===== ABRIR DÍA HOY =====
+const DM={1:'lun20',2:'mar21',3:'mie22',4:'jue23',5:'vie24',6:'sab25',0:'dom26'};
+const dh=DM[HOY.getDay()];
+const bh=document.getElementById(dh), ah=document.getElementById('darr-'+dh);
+if(bh){ bh.classList.add('open'); if(ah) ah.classList.add('open'); }
+
+// ===== INIT =====
+restoreTasks(); restoreCounters(); restoreG(); updateFin(); showMillon(E.millon||0);
+</script>
+</body>
+</html>
